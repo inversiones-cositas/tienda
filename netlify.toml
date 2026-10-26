@@ -2,6 +2,9 @@
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  NODE_VERSION = "22"
+
 # SPA: /admin y rutas de React Router resuelven a index.html
 [[redirects]]
   from = "/*"

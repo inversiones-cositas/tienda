@@ -10,7 +10,22 @@ interface ProductFormProps {
   onCancel: () => void;
 }
 
-const EMPTY: ProductDraft = {
+/** Campos del formulario: texto siempre string, el dominio se conserva. */
+interface FormState {
+  name: string;
+  description: string;
+  price: number;
+  image_url: string;
+  category: string;
+  stock: number | null;
+  is_visible: boolean;
+}
+
+/** Estado del formulario: los campos de texto viven como string de verdad
+ * (los inputs requieren string | number, nunca null); la conversión a
+ * ProductDraft —con nulls del dominio— ocurre solo en handleSubmit.
+ */
+const EMPTY: FormState = {
   name: "",
   description: "",
   price: 0,
@@ -26,7 +41,7 @@ const EMPTY: ProductDraft = {
  */
 export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
   const editing = product !== undefined;
-  const [draft, setDraft] = useState<ProductDraft>(
+  const [draft, setDraft] = useState<FormState>(
     editing
       ? {
           name: product.name,
@@ -46,7 +61,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
 
   const shownPreview = localPreview ?? (draft.image_url || null);
 
-  function set<K extends keyof ProductDraft>(key: K, value: ProductDraft[K]) {
+  function set<K extends keyof FormState>(key: K, value: FormState[K]) {
     setDraft((d) => ({ ...d, [key]: value }));
   }
 
@@ -74,7 +89,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
       setLocalPreview(null);
     }
     setFile(null);
-    set("image_url", null);
+    set("image_url", "");
   }
 
   async function handleSubmit(e: FormEvent) {
