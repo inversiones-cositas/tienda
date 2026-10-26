@@ -1,0 +1,47 @@
+# Keep-alive de Supabase: evita que el proyecto gratuito entre en pausa
+# por inactividad (se pausa tras ~7 dias sin actividad).
+#
+# Nota: el GET a la tienda solo comprueba que Netlify responde; como es una
+# SPA, el HTML no ejecuta JS y NO consulta Supabase. Por eso la segunda
+# peticion va directa al REST de Supabase (products), que es la que
+# realmente mantiene el proyecto activo.
+#
+# Secretos requeridos en el repositorio (Settings > Secrets and variables >
+# Actions): SUPABASE_URL y SUPABASE_ANON_KEY (mismos valores de VITE_).
+# La anon key es publica por diseno; las politicas RLS limitan lo que se ve.
+
+name: Keep-alive Supabase
+
+on:
+  schedule:
+    # Cada ~3 dias a las 12:00 UTC (*/3 = dias 1, 4, 7... del mes; el
+    # reinicio del mes puede acortar un hueco ocasional, sin problema
+    # porque el limite real de pausa es ~7 dias).
+    - cron: "0 12 */3 * *"
+  workflow_dispatch: # permite lanzarlo a mano desde la pestana Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Salud de la tienda (Netlify)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
+            https://catalogo-cositas.netlify.app/)
+          echo "Tienda respondio: HTTP $code"
+          if [ "$code" != "200" ]; then exit 1; fi
+
+      - name: Ping a Supabase (mantiene el proyecto activo)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::warning::Faltan secretos SUPABASE_URL o SUPABASE_ANON_KEY; ping omitido."
+            exit 0
+          fi
+          code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            "$SUPABASE_URL/rest/v1/products?select=id&is_visible=eq.true&limit=1")
+          echo "Supabase respondio: HTTP $code"
+          if [ "$code" != "200" ]; then exit 1; fi
