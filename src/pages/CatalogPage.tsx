@@ -1,13 +1,16 @@
 import { useMemo, useState } from "react";
 import { useProducts } from "../hooks/useProducts";
 import { ProductCard } from "../components/ProductCard";
+import { ProductDetailModal } from "../components/ProductDetailModal";
 import { WelcomeBanner } from "../components/WelcomeBanner";
 import { CategoryBubbles } from "../components/CategoryBubbles";
+import type { Product } from "../types";
 
 export default function CatalogPage() {
   const { products, loading, error } = useProducts();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string | null>(null);
+  const [selected, setSelected] = useState<Product | null>(null);
 
   const categories = useMemo(() => {
     const set = new Map<string, number>();
@@ -90,10 +93,20 @@ export default function CatalogPage() {
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((product, index) => (
-            <ProductCard key={product.id} product={product} eager={index < 3} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              eager={index < 3}
+              onOpen={setSelected}
+            />
           ))}
         </div>
       )}
+
+      <ProductDetailModal
+        product={selected}
+        onClose={() => setSelected(null)}
+      />
     </div>
   );
 }

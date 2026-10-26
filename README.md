@@ -14,7 +14,8 @@ npm run build    # verificación de tipos + bundle de producción
 
 1. Copia `.env.example` a `.env.local` y completas las variables reales.
 2. Ejecuta `supabase/schema.sql` en tu proyecto de Supabase (tabla `products`
-   + RLS de lectura pública).
+   + RLS de lectura pública). Si ya tenías la tienda creada, ejecuta
+   `supabase/migrations/20261026_multi_images.sql` para añadir `images[]`.
 3. Publica productos y el catálogo los muestra al instante.
 
 ## Estado actual
@@ -27,8 +28,11 @@ npm run build    # verificación de tipos + bundle de producción
   sintetizada (Web Audio, opt-in con Play/Pause).
 - ✅ Checkout por WhatsApp con mensaje prellenado (lista + total).
 - ✅ Panel `/admin`: login Supabase Auth + CRUD completo de productos.
-- ✅ Imágenes: subida directa a Storage (bucket `product-images`, máx. 5 MB)
-  desde el formulario; la URL pública queda en `products.image_url`.
+- ✅ Galería de fotos por producto (`products.images[]`, hasta 8): subida
+  múltiple a Storage (bucket `product-images`, máx. 5 MB cada una) desde el
+  formulario; la primera foto es la portada.
+- ✅ Sub-ventana de detalle: foto principal + miniaturas navegables, ficha
+  completa, "Agregar al pedido" y consulta directa por WhatsApp.
 - 🛠️ Pendiente opcional: limpieza de imágenes huérfanas al reemplazar/borrar.
 
 ## Deploy a producción (Netlify)

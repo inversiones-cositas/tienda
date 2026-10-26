@@ -8,8 +8,8 @@ export interface Product {
   description: string | null;
   /** Precio en la moneda del catálogo (sin símbolo). */
   price: number;
-  /** URL de la imagen, normalmente un bucket público de Supabase Storage. */
-  image_url: string | null;
+  /** Lista de URLs de imágenes del producto. */
+  images: string[];
   /** Categoría para filtros del catálogo. */
   category: string | null;
   /** Unidades disponibles. `null` = sin control de stock. */

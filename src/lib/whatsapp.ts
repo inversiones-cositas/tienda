@@ -44,3 +44,15 @@ export function buildWhatsAppCheckoutUrl(items: CartItem[]): string {
   const text = encodeURIComponent(lines.join("\n"));
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
 }
+
+/**
+ * Deep link para consultar/pedir un producto concreto desde su ficha.
+ */
+export function buildWhatsAppProductUrl(
+  product: Pick<CartItem["product"], "name" | "price">,
+): string {
+  const text = encodeURIComponent(
+    `¡Hola ${STORE_NAME}! Me interesa esta cosita: ${product.name} — ${formatPrice(product.price)}. ¿Está disponible?`,
+  );
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+}

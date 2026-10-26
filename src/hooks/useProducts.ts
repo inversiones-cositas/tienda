@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase, PRODUCTS_TABLE } from "../lib/supabase";
+import { normalizeProduct } from "../lib/products";
 import type { Product } from "../types";
 
 export function useProducts() {
@@ -20,7 +21,7 @@ export function useProducts() {
 
         if (cancelled) return;
         if (err) throw err;
-        setProducts(data ?? []);
+        setProducts((data ?? []).map(normalizeProduct));
       } catch (e) {
         if (cancelled) return;
         if (e instanceof Error) setError(e.message);

@@ -7,7 +7,9 @@ Stack: Vite + React + TypeScript + Tailwind CSS v4 + Supabase.
 
 ### 1. Catálogo público (`/`)
 - Página principal con la grilla de productos obtenidos de Supabase (tabla `products`).
-- Cada producto: imagen, nombre, precio, disponibilidad y botón de acción.
+- Cada producto: galería de imágenes (`images[]`), nombre, precio,
+  disponibilidad y botón de acción. Al tocar la ficha se abre la
+  sub-ventana de detalle (foto principal + miniaturas, carrito y WhatsApp).
 - Carrito local (sin backend): el usuario acumula productos antes de pedir.
 - Búsqueda / orden básico. Sección de contacto y redes en el footer.
 

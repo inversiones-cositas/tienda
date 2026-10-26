@@ -6,7 +6,7 @@ create table if not exists public.products (
   name        text not null,
   description text,
   price       numeric(10, 2) not null check (price >= 0),
-  image_url   text,
+  images      text[] not null default '{}',
   category    text,
   stock       integer,
   is_visible  boolean not null default true,

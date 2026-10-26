@@ -13,11 +13,11 @@ export async function uploadProductImage(file: File): Promise<string> {
     throw new Error("El archivo no es una imagen (usa PNG, JPG o WebP).");
   }
   if (file.size > MAX_BYTES) {
-    throw new Error("La imagen supera los 5 MB. Redúcela e intenta de nuevo.");
+    throw new Error(`“${file.name}” supera los 5 MB. Redúcela e intenta de nuevo.`);
   }
 
   const safeName = file.name.replace(/[^a-z0-9.\-_]/gi, "-");
-  const path = `${Date.now()}-${safeName}`;
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${safeName}`;
 
   const { error } = await supabase.storage
     .from(BUCKET)
@@ -29,6 +29,14 @@ export async function uploadProductImage(file: File): Promise<string> {
 
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
   return data.publicUrl;
+}
+
+/**
+ * Sube varias fotos en paralelo y devuelve sus URLs en el mismo orden.
+ * Si una falla, el error nombra el archivo para que sea fácil de detectar.
+ */
+export async function uploadProductImages(files: File[]): Promise<string[]> {
+  return Promise.all(files.map((file) => uploadProductImage(file)));
 }
 
 function translateStorageError(message: string): string {

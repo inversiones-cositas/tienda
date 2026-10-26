@@ -240,9 +240,9 @@ function AdminDashboard() {
               className="flex flex-wrap items-center gap-4 rounded-3xl border border-line bg-surface p-4 shadow-card"
             >
               <div className="h-14 w-14 overflow-hidden rounded-xl bg-muted">
-                {product.image_url && (
+                {product.images[0] && (
                   <img
-                    src={product.image_url}
+                    src={product.images[0]}
                     alt=""
                     className="h-full w-full object-cover"
                   />

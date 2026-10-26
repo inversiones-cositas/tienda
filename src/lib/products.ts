@@ -3,6 +3,19 @@ import type { Product } from "../types";
 
 export type ProductDraft = Omit<Product, "id" | "created_at">;
 
+/** Fila cruda de la tabla, con la columna heredada image_url opcional. */
+type ProductRow = Product & { image_url?: string | null };
+
+/**
+ * Normaliza una fila de Supabase al tipo Product:
+ * garantiza `images` como array y migra el `image_url` heredado al vuelo.
+ */
+export function normalizeProduct(row: ProductRow): Product {
+  const images = Array.isArray(row.images) ? row.images.filter(Boolean) : [];
+  if (images.length === 0 && row.image_url) images.push(row.image_url);
+  return { ...row, images };
+}
+
 /** Lista todos los productos, incluidos los ocultos (vista de admin). */
 export async function listAllProducts(): Promise<Product[]> {
   const { data, error } = await supabase
@@ -10,7 +23,7 @@ export async function listAllProducts(): Promise<Product[]> {
     .select("*")
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return data ?? [];
+  return (data ?? []).map(normalizeProduct);
 }
 
 export async function createProduct(draft: ProductDraft): Promise<Product> {
@@ -20,7 +33,7 @@ export async function createProduct(draft: ProductDraft): Promise<Product> {
     .select()
     .single();
   if (error) throw error;
-  return data;
+  return normalizeProduct(data);
 }
 
 export async function updateProduct(
@@ -34,7 +47,7 @@ export async function updateProduct(
     .select()
     .single();
   if (error) throw error;
-  return data;
+  return normalizeProduct(data);
 }
 
 export async function deleteProduct(id: string): Promise<void> {
