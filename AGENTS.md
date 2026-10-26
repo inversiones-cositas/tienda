@@ -21,6 +21,10 @@ Stack: Vite + React + TypeScript + Tailwind CSS v4 + Supabase.
 ### 3. Panel de administración (`/admin`)
 - ✅ Implementado: login con Supabase Auth (email + contraseña) y CRUD de
   productos (alta, edición, visibilidad, borrado con confirmación).
+- Acceso **no anunciado**: no hay enlace "Admin" en el menú público; se
+  entra escribiendo `/admin` en la barra o con el atajo secreto
+  (Ctrl+Shift+A / Ctrl+Alt+A). La protección real es el login (Supabase
+  Auth); el atajo es solo discreción de interfaz.
 - Escrituras habilitadas por `supabase/admin-policy.sql` para el rol
   `authenticated`. Imágenes: `supabase/storage-setup.sql` crea el bucket
   público `product-images` con sus políticas.

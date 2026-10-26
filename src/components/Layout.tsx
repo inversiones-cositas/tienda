@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState, type ReactNode } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { MusicWidget } from "./MusicWidget";
 import { CartModal } from "./CartModal";
@@ -8,6 +8,21 @@ import { CartBar } from "./CartBar";
 export function Layout({ children }: { children: ReactNode }) {
   const { totalItems } = useCart();
   const [cartOpen, setCartOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Atajo secreto para el panel: Ctrl+Shift+A (o Ctrl+Alt+A por si el
+  // navegador reserva la primera combinación). El enlace /admin no se
+  // anuncia en el menú público.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.ctrlKey && (e.shiftKey || e.altKey) && e.key.toLowerCase() === "a") {
+        e.preventDefault();
+        navigate("/admin");
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [navigate]);
 
   return (
     <div className="flex min-h-dvh flex-col text-ink">
@@ -27,17 +42,11 @@ export function Layout({ children }: { children: ReactNode }) {
             />
           </Link>
           <nav className="flex items-center gap-4 text-sm">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="transition-colors duration-200 hover:text-accent"
             >
               Catálogo
-            </a>
-            <Link
-              to="/admin"
-              className="text-ink-soft transition-colors duration-200 hover:text-accent"
-            >
-              Admin
             </Link>
             <button
               type="button"

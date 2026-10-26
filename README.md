@@ -50,6 +50,8 @@ Ver `netlify.toml` (build + redirects SPA). Resumen:
    `supabase/admin-policy.sql` (escrituras para usuarios autenticados).
 2. En Supabase → Authentication → Users, crea tu usuario admin.
 3. Opcional: agrega `VITE_ADMIN_EMAIL` en `.env.local` para prellenar el login.
+4. Entra al panel escribiendo `/admin` en la barra o con el atajo secreto:
+   **Ctrl+Shift+A** (alternativa Ctrl+Alt+A). No aparece en el menú.
 
 ## Para probar el checkout sin productos
 
