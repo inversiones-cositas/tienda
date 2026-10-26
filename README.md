@@ -24,7 +24,15 @@ npm run build    # verificación de tipos + bundle de producción
 - ✅ Conexión a Supabase con validación temprana de entorno.
 - ✅ Catálogo público: grilla, búsqueda y carrito local.
 - ✅ Checkout por WhatsApp con mensaje prellenado (lista + total).
-- 🔜 Panel `/admin` con Supabase Auth y CRUD de productos.
+- ✅ Panel `/admin`: login Supabase Auth + CRUD completo de productos.
+- 🛠️ Subida de imágenes a Storage desde el panel (hoy se pega una URL).
+
+## Configurar el acceso admin
+
+1. Ejecuta `supabase/schema.sql` (tabla + lectura pública) y
+   `supabase/admin-policy.sql` (escrituras para usuarios autenticados).
+2. En Supabase → Authentication → Users, crea tu usuario admin.
+3. Opcional: agrega `VITE_ADMIN_EMAIL` en `.env.local` para prellenar el login.
 
 ## Para probar el checkout sin productos
 

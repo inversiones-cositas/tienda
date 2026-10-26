@@ -19,10 +19,12 @@ Stack: Vite + React + TypeScript + Tailwind CSS v4 + Supabase.
 - Confirmación de stock, dirección y método de pago se resuelven en el chat.
 
 ### 3. Panel de administración (`/admin`)
-- Gestionar el catálogo desde el panel de Supabase o una UI propia en `/admin`.
-- CRUD de productos: alta, edición, precio, stock y visibilidad.
-- Acceso protegido (auth de Supabase). Nunca exponer la clave de servicio
-  en el frontend: solo `anon key` con políticas RLS.
+- ✅ Implementado: login con Supabase Auth (email + contraseña) y CRUD de
+  productos (alta, edición, visibilidad, borrado con confirmación).
+- Escrituras habilitadas por `supabase/admin-policy.sql` para el rol
+  `authenticated`. Hardening sugerido: verificación de perfil administrador
+  (`profiles.is_admin`) cuando haya más de un operador.
+- Nunca exponer la clave de servicio en el frontend. Solo `anon key`.
 
 ## Convenciones
 - Lenguaje de la interfaz: español (Venezuela). Moneda según catálogo.

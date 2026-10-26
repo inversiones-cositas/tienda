@@ -11,9 +11,16 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <Link
             to="/"
-            className="font-display text-xl font-extrabold tracking-tight text-ink transition-opacity duration-200 hover:opacity-80"
+            className="flex items-center transition-opacity duration-200 hover:opacity-80"
+            aria-label="Ir al catálogo — Inversiones Cositas"
           >
-            {import.meta.env.VITE_STORE_NAME}
+            <img
+              src="/logotipo-cositas.svg"
+              alt="Inversiones Cositas"
+              width={128}
+              height={35}
+              className="h-9 w-auto"
+            />
           </Link>
           <nav className="flex items-center gap-4 text-sm">
             <a
