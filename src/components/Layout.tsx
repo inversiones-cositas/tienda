@@ -11,7 +11,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <Link
             to="/"
-            className="font-display text-lg font-bold text-ink transition-opacity duration-200 hover:opacity-80"
+            className="font-display text-xl font-extrabold tracking-tight text-ink transition-opacity duration-200 hover:opacity-80"
           >
             {import.meta.env.VITE_STORE_NAME}
           </Link>
@@ -42,9 +42,12 @@ export function Layout({ children }: { children: ReactNode }) {
         {children}
       </main>
 
-      <footer className="border-t border-line bg-surface py-6 text-center text-sm text-ink-soft">
-        © {new Date().getFullYear()} {import.meta.env.VITE_STORE_NAME} · Pedidos
-        por WhatsApp
+      <footer className="border-t border-line bg-surface py-8 text-center text-sm text-ink-soft">
+        <p className="font-display font-semibold text-ink">
+          {import.meta.env.VITE_STORE_NAME}
+        </p>
+        <p className="mt-1">Pedidos por WhatsApp</p>
+        <p className="mt-1">© {new Date().getFullYear()}</p>
       </footer>
     </div>
   );

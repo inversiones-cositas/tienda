@@ -57,7 +57,7 @@ export default function CatalogPage() {
         placeholder="Buscar productos…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full max-w-sm rounded-md border border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+        className="w-full max-w-sm rounded-full border border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
       />
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

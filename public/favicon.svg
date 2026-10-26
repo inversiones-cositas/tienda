@@ -1,1 +1,15 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#c2571d"/><path d="M9 11h14l-2.2 9.2a2 2 0 0 1-2 1.55h-5.6a2 2 0 0 1-2-1.55L9 11z" fill="#fff"/><path d="M13 11a3 3 0 0 1 6 0" stroke="#fff" stroke-width="2" fill="none"/></svg>
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Osito Cositas · aproximación de la marca para favicon (reemplazar por el SVG oficial cuando esté en public/) -->
+  <g stroke="#c9b197" stroke-width="3.5">
+    <circle cx="17" cy="15" r="9" fill="#fdf1df"/>
+    <circle cx="47" cy="15" r="9" fill="#fdf1df"/>
+  </g>
+  <circle cx="19" cy="13" r="4" fill="#fbd7d5"/>
+  <circle cx="45" cy="13" r="4" fill="#fbd7d5"/>
+  <path d="M10 30a22 21 0 0 1 44 0a22 21 0 0 1-44 0z" fill="#fdf1df" stroke="#c9b197" stroke-width="3.5"/>
+  <ellipse cx="24.5" cy="34" rx="3.6" ry="4.4" fill="#4a3a2d"/>
+  <ellipse cx="39.5" cy="34" rx="3.6" ry="4.4" fill="#4a3a2d"/>
+  <ellipse cx="32" cy="41" rx="5.4" ry="4.2" fill="#4a3a2d"/>
+  <circle cx="19.5" cy="43" r="4.6" fill="#fbd7d5"/>
+  <circle cx="44.5" cy="43" r="4.6" fill="#fbd7d5"/>
+</svg>

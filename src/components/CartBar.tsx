@@ -11,7 +11,7 @@ export function CartBar() {
   if (items.length === 0) return null;
 
   return (
-    <aside className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface p-4 shadow-lg">
+    <aside className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-page p-4 shadow-lift">
       <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-sm text-ink-soft">
           <p className="font-medium text-ink">
@@ -39,7 +39,7 @@ export function CartBar() {
             href={buildWhatsAppCheckoutUrl(items)}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-contrast transition-opacity duration-200 hover:opacity-90 active:opacity-75"
+            className="rounded-full bg-whatsapp px-5 py-2 text-sm font-semibold text-accent-contrast transition-opacity duration-200 hover:opacity-90 active:opacity-75"
           >
             Pedir por WhatsApp
           </a>

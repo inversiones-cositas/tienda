@@ -1,28 +1,52 @@
-/* Hallmark · v2.0.0 | shape: catalog-store · job: pedir · theme: Cositas (tokens propios) | hero: index · nav: lofter | posture: restrained */
-/* Control: pendiente (primera pasada — designed sin sweep aún) */
+/* Hallmark · v2.0.0 | shape: catalog-store · genre: playful · job: pedir · theme: Cositas (by request) · hero: counter · nav: lofter | posture: committed */
+/* Control: paleta extraída del logo oficial (osito cositas): crema, rosa, azul, lila, miel, salvia y tinta cacao */
 
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
 
-/* ── Tokens del sistema ────────────────────────────────────────────── */
+/* ── Tokens del sistema — paleta del logo oficial ────────────────── */
 @theme {
-  /* Superficies */
-  --color-page: #faf6f1;
-  --color-surface: #fffdf9;
-  --color-muted: #f0ebe3;
-  --color-line: #e4ddd1;
+  /* Superficies: el crema del pelaje del osito */
+  --color-page: #fdf4e5;
+  --color-surface: #fffcf4;
+  --color-muted: #f6ead8;
+  --color-line: #e7d6bf;
 
-  /* Tinta */
-  --color-ink: #1f1b16;
-  --color-ink-soft: #6b635a;
+  /* Tinta: café de los ojos y del hocico del osito */
+  --color-ink: #43322a;
+  --color-ink-soft: #7f6a5c;
 
-  /* Señal de marca: ámbar-terracota de "cositas" (alegría criolla, no gradiente) */
-  --color-accent: #c2571d;
-  --color-accent-contrast: #fff8f4;
-  --color-selection: #f6d9c5;
+  /* Azul Cositas: acción principal (agregar, enlaces fuertes) */
+  --color-accent: #5079ab;
+  --color-accent-contrast: #fdf8ed;
+  --color-accent-soft: #b9cde6;
 
-  /* Tipografía */
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+  /* Verde salvia de la "t": checkout WhatsApp (el chat es verde) */
+  --color-whatsapp: #53855d;
+  --color-whatsapp-soft: #d3e4cf;
+
+  /* Rosa del blush: acentos tiernos, tags, esquinas felices */
+  --color-blossom: #e2777d;
+  --color-blossom-soft: #fbdcdc;
+
+  /* Lila de la "a": categorías y chips suaves */
+  --color-lilac: #a587c9;
+  --color-lilac-soft: #e9dff2;
+
+  /* Miel de la "i": estrellas y detalles cálidos */
+  --color-honey: #dfb678;
+  --color-honey-soft: #f9edcf;
+
+  /* El tostado del contorno, para trazos y sombras suaves */
+  --color-toast: #c9b197;
+  --shadow-lift: 0 -4px 16px 0 #43322a14;
+
+  /* Selección recién salida de la paleta */
+  --color-selection: #fbdcdf;
+
+  /* Tipografía: display redondeada (burbujitas del logo) */
+  --font-display: "Baloo 2", ui-rounded, system-ui, sans-serif;
+  --font-sans: ui-rounded, system-ui, "Segoe UI", Roboto, sans-serif;
 }
 
 html,
@@ -30,14 +54,13 @@ body {
   overflow-x: clip;
 }
 
-/* La selección y las barras de desplazamiento también salen de la paleta */
+html {
+  scrollbar-color: var(--color-line) var(--color-page);
+}
+
 ::selection {
   background-color: var(--color-selection);
   color: var(--color-ink);
-}
-
-html {
-  scrollbar-color: var(--color-line) var(--color-page);
 }
 
 /* El pie pega al fondo, la barra de carrito respeta el flujo */

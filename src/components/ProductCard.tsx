@@ -13,7 +13,7 @@ export function ProductCard({ product, eager = false }: ProductCardProps) {
   const soldOut = product.stock !== null && product.stock <= 0;
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-lg border border-line bg-surface transition-transform duration-200 hover:-translate-y-0.5">
+    <article className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_1px_0_0_var(--color-line)] transition-transform duration-200 hover:-translate-y-0.5">
       <div className="relative aspect-square overflow-hidden bg-muted">
         {product.image_url ? (
           <img
@@ -38,14 +38,14 @@ export function ProductCard({ product, eager = false }: ProductCardProps) {
             {product.description}
           </p>
         )}
-        <p className="mt-auto text-lg font-semibold text-accent">
+        <p className="mt-auto text-lg font-bold text-accent">
           {formatPrice(product.price)}
         </p>
         <button
           type="button"
           onClick={() => addItem(product)}
           disabled={soldOut}
-          className="mt-1 rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-contrast transition-opacity duration-200 hover:opacity-90 active:opacity-75 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-40 disabled:active:opacity-40"
+          className="mt-1 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-contrast transition-opacity duration-200 hover:opacity-90 active:opacity-75 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-40 disabled:active:opacity-40"
         >
           {soldOut ? "Agotado" : "Agregar al pedido"}
         </button>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Catálogo de Inversiones Cositas
 
 Tienda-catalogo con **checkout por WhatsApp**: el cliente arma su pedido en la
@@ -34,3 +35,7 @@ pedido se oculta. Inserta una fila de prueba para ver la grilla:
 insert into public.products (name, description, price, stock)
 values ('Producto de prueba', 'Primer artículo del catálogo', 10.00, 5);
 ```
+=======
+# tienda
+Tienda Online de Inversiones Cositas.
+>>>>>>> 21924c4eaa5af8a5e8ae84308a0c4354f5aefade
