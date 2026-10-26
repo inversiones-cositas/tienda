@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Catálogo de Inversiones Cositas
 
 Tienda-catalogo con **checkout por WhatsApp**: el cliente arma su pedido en la
@@ -32,6 +31,19 @@ npm run build    # verificación de tipos + bundle de producción
   desde el formulario; la URL pública queda en `products.image_url`.
 - 🛠️ Pendiente opcional: limpieza de imágenes huérfanas al reemplazar/borrar.
 
+## Deploy a producción (Netlify)
+
+Ver `netlify.toml` (build + redirects SPA). Resumen:
+
+1. En Netlify: **Add new site → Import an existing project → GitHub** → repo `tienda`.
+2. Framework detectado: Vite (build `npm run build`, publish `dist`).
+3. **Environment variables**: copia las variables de `.env.local`
+   (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_WHATSAPP_NUMBER`,
+   `VITE_STORE_NAME`, opcional `VITE_ADMIN_EMAIL`).
+4. En Supabase → Authentication → URL Configuration → agrega la URL
+   pública de Netlify a **Redirect URLs** (para que el login de /admin
+   funcione en producción).
+
 ## Configurar el acceso admin
 
 1. Ejecuta `supabase/schema.sql` (tabla + lectura pública) y
@@ -48,7 +60,3 @@ pedido se oculta. Inserta una fila de prueba para ver la grilla:
 insert into public.products (name, description, price, stock)
 values ('Producto de prueba', 'Primer artículo del catálogo', 10.00, 5);
 ```
-=======
-# tienda
-Tienda Online de Inversiones Cositas.
->>>>>>> 21924c4eaa5af8a5e8ae84308a0c4354f5aefade
