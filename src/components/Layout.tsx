@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { MusicWidget } from "./MusicWidget";
 import { CartModal } from "./CartModal";
+import { CartBar } from "./CartBar";
 
 export function Layout({ children }: { children: ReactNode }) {
   const { totalItems } = useCart();
@@ -77,6 +78,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <p className="mt-1">© {new Date().getFullYear()}</p>
       </footer>
 
+      <CartBar />
       <MusicWidget />
     </div>
   );
