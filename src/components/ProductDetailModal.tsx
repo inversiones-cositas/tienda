@@ -93,13 +93,13 @@ export function ProductDetailModal({
         {/* Galería: visor principal + miniaturas navegables */}
         <div className="px-5 pt-3">
           <div
-            className={`relative aspect-square overflow-hidden rounded-2xl border border-line ${tone.bg}`}
+            className={`relative h-[34dvh] min-h-[200px] max-h-[360px] overflow-hidden rounded-2xl border border-line ${tone.bg}`}
           >
             {current ? (
               <img
                 src={current}
                 alt={`${product.name}, foto ${active + 1} de ${images.length}`}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center font-display text-sm font-semibold text-ink/60">
