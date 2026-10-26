@@ -1,12 +1,13 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import { MusicWidget } from "./MusicWidget";
 
 export function Layout({ children }: { children: ReactNode }) {
   const { totalItems } = useCart();
 
   return (
-    <div className="flex min-h-dvh flex-col bg-page text-ink">
+    <div className="flex min-h-dvh flex-col text-ink">
       <header className="border-b-2 border-toast/50 bg-surface">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <Link
@@ -45,7 +46,7 @@ export function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 pb-40">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 pb-48">
         {children}
       </main>
 
@@ -63,6 +64,8 @@ export function Layout({ children }: { children: ReactNode }) {
         <p className="mt-1">Pedidos por WhatsApp</p>
         <p className="mt-1">© {new Date().getFullYear()}</p>
       </footer>
+
+      <MusicWidget />
     </div>
   );
 }

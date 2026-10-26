@@ -26,6 +26,13 @@ Stack: Vite + React + TypeScript + Tailwind CSS v4 + Supabase.
   público `product-images` con sus políticas.
 - Nunca exponer la clave de servicio en el frontend. Solo `anon key`.
 
+### Estilo
+- Identidad kawaii boutique: fondo con wash de rosa/lila/miel (siempre vía
+  tokens), tarjetas redondeadas con sombras suaves, animaciones discretas
+  (`cart-pop`, `twinkle`) con fallback en `prefers-reduced-motion`.
+- La caja de música de `MusicWidget.tsx` es melodía sintetizada con Web
+  Audio (sin archivos ni licencias); solo suena por decisión del usuario.
+
 ## Convenciones
 - Lenguaje de la interfaz: español (Venezuela). Moneda según catálogo.
 - Variables de entorno con prefijo `VITE_` (ver `.env.example`). `.env.local`

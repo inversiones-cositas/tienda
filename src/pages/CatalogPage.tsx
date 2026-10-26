@@ -1,17 +1,38 @@
 import { useMemo, useState } from "react";
 import { useProducts } from "../hooks/useProducts";
 import { ProductCard } from "../components/ProductCard";
+import { WelcomeBanner } from "../components/WelcomeBanner";
+import { CategoryBubbles } from "../components/CategoryBubbles";
 
 export default function CatalogPage() {
   const { products, loading, error } = useProducts();
   const [query, setQuery] = useState("");
+  const [category, setCategory] = useState<string | null>(null);
+
+  const categories = useMemo(() => {
+    const set = new Map<string, number>();
+    for (const p of products) {
+      if (p.category) set.set(p.category, (set.get(p.category) ?? 0) + 1);
+    }
+    return [...set.keys()];
+  }, [products]);
+
+  const counts = useMemo(() => {
+    const map: Record<string, number> = {};
+    for (const p of products) {
+      if (p.category) map[p.category] = (map[p.category] ?? 0) + 1;
+    }
+    return map;
+  }, [products]);
 
   const filtered = useMemo(
     () =>
-      products.filter((p) =>
-        p.name.toLowerCase().includes(query.trim().toLowerCase()),
+      products.filter(
+        (p) =>
+          (category === null || p.category === category) &&
+          p.name.toLowerCase().includes(query.trim().toLowerCase()),
       ),
-    [products, query],
+    [products, query, category],
   );
 
   if (loading) {
@@ -36,26 +57,9 @@ export default function CatalogPage() {
     );
   }
 
-  if (filtered.length === 0) {
-    return (
-      <p className="text-center text-ink-soft">
-        {query
-          ? `No hay resultados para “${query}”.`
-          : "Aún no hay productos publicados."}
-      </p>
-    );
-  }
-
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="font-display text-2xl font-extrabold text-ink">
-          Nuestro catálogo
-        </h1>
-        <p className="mt-1 text-sm text-ink-soft">
-          Agrega lo que te guste y envía tu lista por WhatsApp.
-        </p>
-      </div>
+      <WelcomeBanner />
 
       <label className="sr-only" htmlFor="catalog-search">
         Buscar productos
@@ -63,17 +67,34 @@ export default function CatalogPage() {
       <input
         id="catalog-search"
         type="search"
-        placeholder="Buscar productos…"
+        placeholder="Buscar en Cositas…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className="w-full max-w-sm rounded-full border-2 border-line bg-surface px-4 py-2 text-sm shadow-soft outline-none transition-colors duration-200 focus:border-accent"
       />
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((product, index) => (
-          <ProductCard key={product.id} product={product} eager={index === 0} />
-        ))}
-      </div>
+      <CategoryBubbles
+        categories={categories}
+        selected={category}
+        counts={counts}
+        total={products.length}
+        onSelect={setCategory}
+      />
+
+      {filtered.length === 0 ? (
+        <p className="text-center text-ink-soft">
+          {query || category
+            ? "Nada por aquí todavía. Prueba otra categoría o quita la búsqueda."
+            : "Aún no hay productos publicados."}
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((product, index) => (
+            <ProductCard key={product.id} product={product} eager={index < 3} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+

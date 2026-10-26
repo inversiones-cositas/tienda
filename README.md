@@ -22,7 +22,10 @@ npm run build    # verificación de tipos + bundle de producción
 
 - ✅ Estructura Vite + Tailwind + TypeScript lista, remotas conectadas.
 - ✅ Conexión a Supabase con validación temprana de entorno.
-- ✅ Catálogo público: grilla, búsqueda y carrito local.
+- ✅ Catálogo público: grilla, búsqueda, filtros por burbujas y carrito local.
+- ✅ Identidad kawaii boutique: degradados pastel desde tokens, banner de
+  bienvenida, destellos, barra flotante del pedido y caja de música lo-fi
+  sintetizada (Web Audio, opt-in con Play/Pause).
 - ✅ Checkout por WhatsApp con mensaje prellenado (lista + total).
 - ✅ Panel `/admin`: login Supabase Auth + CRUD completo de productos.
 - ✅ Imágenes: subida directa a Storage (bucket `product-images`, máx. 5 MB)
