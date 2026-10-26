@@ -22,8 +22,8 @@ Stack: Vite + React + TypeScript + Tailwind CSS v4 + Supabase.
 - ✅ Implementado: login con Supabase Auth (email + contraseña) y CRUD de
   productos (alta, edición, visibilidad, borrado con confirmación).
 - Escrituras habilitadas por `supabase/admin-policy.sql` para el rol
-  `authenticated`. Hardening sugerido: verificación de perfil administrador
-  (`profiles.is_admin`) cuando haya más de un operador.
+  `authenticated`. Imágenes: `supabase/storage-setup.sql` crea el bucket
+  público `product-images` con sus políticas.
 - Nunca exponer la clave de servicio en el frontend. Solo `anon key`.
 
 ## Convenciones

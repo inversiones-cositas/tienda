@@ -25,7 +25,9 @@ npm run build    # verificación de tipos + bundle de producción
 - ✅ Catálogo público: grilla, búsqueda y carrito local.
 - ✅ Checkout por WhatsApp con mensaje prellenado (lista + total).
 - ✅ Panel `/admin`: login Supabase Auth + CRUD completo de productos.
-- 🛠️ Subida de imágenes a Storage desde el panel (hoy se pega una URL).
+- ✅ Imágenes: subida directa a Storage (bucket `product-images`, máx. 5 MB)
+  desde el formulario; la URL pública queda en `products.image_url`.
+- 🛠️ Pendiente opcional: limpieza de imágenes huérfanas al reemplazar/borrar.
 
 ## Configurar el acceso admin
 

@@ -1,6 +1,7 @@
-import { useState, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { Product } from "../types";
 import type { ProductDraft } from "../lib/products";
+import { uploadProductImage } from "../lib/storage";
 
 interface ProductFormProps {
   /** Producto a editar; `undefined` = alta de producto nuevo. */
@@ -19,7 +20,10 @@ const EMPTY: ProductDraft = {
   is_visible: true,
 };
 
-/** Formulario de alta/edición de productos del panel /admin. */
+/**
+ * Formulario de alta/edición de productos del panel /admin.
+ * La imagen se sube a Supabase Storage (bucket product-images).
+ */
 export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
   const editing = product !== undefined;
   const [draft, setDraft] = useState<ProductDraft>(
@@ -35,11 +39,42 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
         }
       : EMPTY,
   );
+  const [file, setFile] = useState<File | null>(null);
+  const [localPreview, setLocalPreview] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const shownPreview = localPreview ?? (draft.image_url || null);
+
   function set<K extends keyof ProductDraft>(key: K, value: ProductDraft[K]) {
     setDraft((d) => ({ ...d, [key]: value }));
+  }
+
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    const selected = e.target.files?.[0] ?? null;
+    if (!selected) return;
+    if (!selected.type.startsWith("image/")) {
+      setError("El archivo no es una imagen (usa PNG, JPG o WebP).");
+      return;
+    }
+    if (selected.size > 5 * 1024 * 1024) {
+      setError("La imagen supera los 5 MB. Redúcela e intenta de nuevo.");
+      return;
+    }
+    setError(null);
+    setFile(selected);
+    // Aviso honesto: liberar el blob anterior evita fugas de memoria.
+    if (localPreview) URL.revokeObjectURL(localPreview);
+    setLocalPreview(URL.createObjectURL(selected));
+  }
+
+  function clearImage() {
+    if (localPreview) {
+      URL.revokeObjectURL(localPreview);
+      setLocalPreview(null);
+    }
+    setFile(null);
+    set("image_url", null);
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -55,18 +90,32 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
 
     setSaving(true);
     setError(null);
+
     try {
-      await onSubmit({
+      let finalDraft: ProductDraft = {
         ...draft,
         name: draft.name.trim(),
         description: draft.description.trim() || null,
-        image_url: draft.image_url.trim() || null,
         category: draft.category.trim() || null,
-      });
-      if (!editing) setDraft(EMPTY);
+      };
+
+      if (file) {
+        finalDraft = {
+          ...finalDraft,
+          image_url: await uploadProductImage(file),
+        };
+      }
+
+      await onSubmit(finalDraft);
+      if (!editing) {
+        setDraft(EMPTY);
+        clearImage();
+      }
       onCancel();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo guardar.");
+      setError(
+        err instanceof Error ? err.message : "No se pudo guardar el producto.",
+      );
     } finally {
       setSaving(false);
     }
@@ -75,7 +124,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-3xl border-line bg-surface p-5 shadow-card border-2"
+      className="flex flex-col gap-4 rounded-3xl border-2 border-line bg-surface p-5 shadow-card"
     >
       <h3 className="font-display text-lg font-extrabold text-ink">
         {editing ? "Editar producto" : "Nuevo producto"}
@@ -123,27 +172,60 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
         </label>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <label className="flex flex-col gap-1 text-sm">
-          Categoría
-          <input
-            type="text"
-            value={draft.category}
-            onChange={(e) => set("category", e.target.value)}
-            className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
-          />
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          URL de la imagen
-          <input
-            type="url"
-            placeholder="https://…"
-            value={draft.image_url}
-            onChange={(e) => set("image_url", e.target.value)}
-            className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
-          />
-        </label>
-      </div>
+      <label className="flex flex-col gap-1 text-sm">
+        Categoría
+        <input
+          type="text"
+          value={draft.category}
+          onChange={(e) => set("category", e.target.value)}
+          className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+        />
+      </label>
+
+      {/* Imagen: subida directa a Supabase Storage */}
+      <fieldset className="rounded-2xl border-2 border-line bg-page p-4">
+        <legend className="px-2 text-sm font-semibold text-ink">
+          Foto del producto
+        </legend>
+        <div className="flex items-center gap-4">
+          <div
+            className={`h-20 w-20 shrink-0 overflow-hidden rounded-xl ${
+              shownPreview ? "bg-lilac-soft" : "bg-surface"
+            }`}
+          >
+            {shownPreview && (
+              <img
+                src={shownPreview}
+                alt="Vista previa de la imagen del producto"
+                className="h-full w-full object-cover"
+              />
+            )}
+          </div>
+          <div className="flex flex-col gap-2">
+            <label className="cursor-pointer rounded-full border-2 border-accent bg-accent-soft px-4 py-2 text-center text-sm font-bold text-ink transition-opacity duration-200 hover:opacity-85 active:translate-y-px">
+              Elegir imagen…
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                onChange={handleFileChange}
+                className="sr-only"
+              />
+            </label>
+            {shownPreview && (
+              <button
+                type="button"
+                onClick={clearImage}
+                className="rounded-full px-3 py-1 text-xs font-semibold text-blossom transition-colors duration-200 hover:text-ink"
+              >
+                Quitar imagen
+              </button>
+            )}
+            <p className="text-xs text-ink-soft">
+              PNG, JPG o WebP · hasta 5 MB
+            </p>
+          </div>
+        </div>
+      </fieldset>
 
       <label className="flex flex-col gap-1 text-sm">
         Descripción
@@ -182,9 +264,15 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
         <button
           type="submit"
           disabled={saving}
-          className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-accent-contrast transition-opacity duration-200 hover:opacity-90 active:opacity-75 active:translate-y-px disabled:opacity-40"
+          className="rounded-full bg-accent px-5 py-2 text-sm font-semibold text-accent-contrast shadow-soft transition-opacity duration-200 hover:opacity-90 active:opacity-75 active:translate-y-px disabled:opacity-40"
         >
-          {saving ? "Guardando…" : editing ? "Guardar cambios" : "Crear"}
+          {saving
+            ? file
+              ? "Subiendo imagen…"
+              : "Guardando…"
+            : editing
+              ? "Guardar cambios"
+              : "Crear"}
         </button>
       </div>
     </form>
