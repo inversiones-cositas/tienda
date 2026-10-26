@@ -9,7 +9,7 @@ export const CATEGORY_TONES = [
   { bg: "bg-blossom-soft", text: "text-ink" }, // rosa del blush
   { bg: "bg-honey-soft", text: "text-ink" }, // miel de la "i"
   { bg: "bg-whatsapp-soft", text: "text-ink" }, // salvia de la "t"
-  { bg: "bg-accent-soft", text: "text-ink" }, // celeste de la "C"
+  { bg: "bg-toast-soft", text: "text-ink" }, // tostado del contorno
 ] as const;
 
 export type CategoryTone = (typeof CATEGORY_TONES)[number];

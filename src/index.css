@@ -16,10 +16,10 @@
   --color-ink: #43322a;
   --color-ink-soft: #7f6a5c;
 
-  /* Azul Cositas: acción principal (agregar, enlaces fuertes) */
-  --color-accent: #5079ab;
-  --color-accent-contrast: #fdf8ed;
-  --color-accent-soft: #b9cde6;
+  /* Rosa profundo del blush del logo: acción principal (agregar, enlaces fuertes) */
+  --color-accent: #c64a54;
+  --color-accent-contrast: #fff8f4;
+  --color-accent-soft: #fbd7d5;
 
   /* Verde salvia de la "t": checkout WhatsApp (el chat es verde) */
   --color-whatsapp: #53855d;
@@ -39,6 +39,7 @@
 
   /* El tostado del contorno, para trazos y sombras suaves */
   --color-toast: #c9b197;
+  --color-toast-soft: #efe3d2;
   --shadow-lift: 0 -4px 16px 0 #43322a14;
   --shadow-card: 0 2px 10px 0 #43322a10;
   --shadow-pop: 0 8px 20px 0 #43322a1a;
@@ -116,6 +117,18 @@ body {
 
 .twinkle {
   animation: twinkle 3.2s ease-in-out infinite;
+}
+
+/* Flote boutique de tarjetas: suben, se inclinan un pelito y ganan sombra */
+.card-float {
+  transition-property: transform, box-shadow;
+  transition-duration: 240ms;
+  transition-timing-function: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.card-float:hover {
+  transform: translateY(-6px) rotate(-0.4deg);
+  box-shadow: var(--shadow-pop);
 }
 
 ::selection {

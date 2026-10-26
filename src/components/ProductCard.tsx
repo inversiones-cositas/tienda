@@ -15,7 +15,7 @@ export function ProductCard({ product, eager = false }: ProductCardProps) {
   const tone = toneFor(product.category, product.id);
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-card transition-transform duration-200 hover:-translate-y-0.5">
+    <article className="card-float group flex flex-col overflow-hidden rounded-3xl border border-line bg-surface shadow-card">
       <div
         className={`relative aspect-square overflow-hidden transition-shadow duration-200 group-hover:shadow-pop ${tone.bg}`}
       >

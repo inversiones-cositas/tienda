@@ -7,15 +7,16 @@ import type { CSSProperties } from "react";
 export function WelcomeBanner() {
   return (
     <section className="relative overflow-hidden rounded-3xl border-2 border-line bg-gradient-to-r from-blossom-soft via-lilac-soft to-honey-soft p-6 shadow-card sm:p-8">
-      <Sparkle className="twinkle absolute left-[12%] top-4 h-4 w-4 text-ink/30" />
+      <Sparkle className="twinkle absolute left-[10%] top-4 h-5 w-5 text-honey" />
       <Sparkle
-        className="twinkle absolute bottom-5 left-[45%] h-3 w-3 text-ink/25"
+        className="twinkle absolute bottom-5 left-[42%] h-4 w-4 text-blossom"
         style={{ animationDelay: "0.8s" }}
       />
       <Sparkle
-        className="twinkle absolute right-[38%] top-6 h-5 w-5 text-ink/30"
+        className="twinkle absolute right-[34%] top-5 h-6 w-6 text-honey"
         style={{ animationDelay: "1.6s" }}
       />
+      <Heart className="twinkle absolute bottom-6 right-8 h-4 w-4 text-blossom/70" />
 
       <div className="flex items-center gap-5">
         <div className="min-w-0 flex-1">
@@ -72,6 +73,14 @@ function Sparkle({
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} style={style} aria-hidden="true">
       <path d="M12 2c.4 4.8 1.6 6.4 7 8-5.4 1.6-6.6 3.2-7 8-.4-4.8-1.6-6.4-7-8 5.4-1.6 6.6-3.2 7-8z" />
+    </svg>
+  );
+}
+
+function Heart({ className = "", style }: { className?: string; style?: CSSProperties }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} style={style} aria-hidden="true">
+      <path d="M12 21c-.4 0-8.6-4.9-9.7-10C1.5 7.6 3.6 4.5 6.8 4.5c2 0 3.8 1.2 5.2 3.1 1.4-1.9 3.2-3.1 5.2-3.1 3.2 0 5.3 3.1 4.5 6.5-1.1 5.1-9.3 10-9.7 10z" />
     </svg>
   );
 }
