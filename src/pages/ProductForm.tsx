@@ -75,9 +75,9 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-5"
+      className="flex flex-col gap-4 rounded-3xl border-line bg-surface p-5 shadow-card border-2"
     >
-      <h3 className="font-display text-lg font-semibold text-ink">
+      <h3 className="font-display text-lg font-extrabold text-ink">
         {editing ? "Editar producto" : "Nuevo producto"}
       </h3>
 
@@ -88,7 +88,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
           required
           value={draft.name}
           onChange={(e) => set("name", e.target.value)}
-          className="rounded-full border border-line bg-page px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+          className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
         />
       </label>
 
@@ -102,7 +102,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
             step="0.01"
             value={draft.price}
             onChange={(e) => set("price", Number(e.target.value))}
-            className="rounded-full border border-line bg-page px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+            className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -118,7 +118,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
                 e.target.value === "" ? null : Number(e.target.value),
               )
             }
-            className="rounded-full border border-line bg-page px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+            className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
           />
         </label>
       </div>
@@ -130,7 +130,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
             type="text"
             value={draft.category}
             onChange={(e) => set("category", e.target.value)}
-            className="rounded-full border border-line bg-page px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+            className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
@@ -140,7 +140,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
             placeholder="https://…"
             value={draft.image_url}
             onChange={(e) => set("image_url", e.target.value)}
-            className="rounded-full border border-line bg-page px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+            className="rounded-full border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
           />
         </label>
       </div>
@@ -151,7 +151,7 @@ export function ProductForm({ product, onSubmit, onCancel }: ProductFormProps) {
           rows={2}
           value={draft.description}
           onChange={(e) => set("description", e.target.value)}
-          className="rounded-2xl border border-line bg-page px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
+          className="rounded-3xl border-2 border-line bg-surface px-4 py-2 text-sm outline-none transition-colors duration-200 focus:border-accent"
         />
       </label>
 

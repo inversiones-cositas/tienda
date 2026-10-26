@@ -62,9 +62,16 @@ function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto flex max-w-sm flex-col gap-4 rounded-2xl border border-line bg-surface p-6"
+      className="mx-auto flex max-w-sm flex-col gap-4 rounded-3xl border border-line bg-surface p-6 shadow-card"
     >
-      <h1 className="font-display text-xl font-semibold text-ink">
+      <img
+        src="/osito-cositas.svg"
+        alt=""
+        width={70}
+        height={65}
+        className="mx-auto mt-1 h-14 w-auto"
+      />
+      <h1 className="font-display text-xl font-extrabold text-ink">
         Panel de administración
       </h1>
       <p className="text-sm text-ink-soft">
@@ -230,7 +237,7 @@ function AdminDashboard() {
           {products.map((product) => (
             <li
               key={product.id}
-              className="flex flex-wrap items-center gap-4 rounded-2xl border border-line bg-surface p-4"
+              className="flex flex-wrap items-center gap-4 rounded-3xl border border-line bg-surface p-4 shadow-card"
             >
               <div className="h-14 w-14 overflow-hidden rounded-xl bg-muted">
                 {product.image_url && (
@@ -242,11 +249,24 @@ function AdminDashboard() {
                 )}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium text-ink">{product.name}</p>
-                <p className="text-sm text-ink-soft">
-                  {formatPrice(product.price)}
-                  {product.category ? ` · ${product.category}` : ""}
-                  {product.stock !== null ? ` · stock ${product.stock}` : ""}
+                <p className="truncate font-display font-bold text-ink">
+                  {product.name}
+                </p>
+                <p className="mt-0.5 text-sm text-ink-soft">
+                  <span className="font-semibold text-price">
+                    {formatPrice(product.price)}
+                  </span>
+                  {product.category && (
+                    <>
+                      {" · "}
+                      <span className="rounded-full bg-lilac-soft px-2 py-0.5 text-xs font-semibold text-ink">
+                        {product.category}
+                      </span>
+                    </>
+                  )}
+                  {product.stock !== null
+                    ? ` · stock ${product.stock}`
+                    : ""}
                 </p>
               </div>
               <button

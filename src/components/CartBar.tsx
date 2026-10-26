@@ -14,7 +14,7 @@ export function CartBar() {
     <aside className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-page p-4 shadow-lift">
       <div className="mx-auto flex max-w-5xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-sm text-ink-soft">
-          <p className="font-medium text-ink">
+          <p className="font-display font-bold text-ink">
             {totalItems} {totalItems === 1 ? "artículo" : "artículos"} · pedido
             listo para WhatsApp
           </p>
@@ -23,7 +23,7 @@ export function CartBar() {
               .map((it) => `${it.quantity}× ${it.product.name}`)
               .join(" · ")}
             {" — "}
-            <strong>${totalPrice.toFixed(2)}</strong>
+            <strong className="text-price">${totalPrice.toFixed(2)}</strong>
           </p>
         </div>
 

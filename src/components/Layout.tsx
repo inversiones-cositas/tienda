@@ -7,7 +7,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-page text-ink">
-      <header className="border-b border-line bg-surface">
+      <header className="border-b-2 border-toast/50 bg-surface">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <Link
             to="/"
@@ -19,7 +19,7 @@ export function Layout({ children }: { children: ReactNode }) {
               alt="Inversiones Cositas"
               width={128}
               height={35}
-              className="h-9 w-auto"
+              className="h-9 w-auto object-contain"
             />
           </Link>
           <nav className="flex items-center gap-4 text-sm">
@@ -36,10 +36,10 @@ export function Layout({ children }: { children: ReactNode }) {
               Admin
             </Link>
             <span
-              className="rounded-full bg-muted px-3 py-1"
+              className="rounded-full bg-lilac-soft px-3 py-1 font-display font-semibold text-ink"
               aria-label={`Carrito con ${totalItems} artículos`}
             >
-              Carrito: {totalItems}
+              Pedido: {totalItems}
             </span>
           </nav>
         </div>
@@ -49,8 +49,15 @@ export function Layout({ children }: { children: ReactNode }) {
         {children}
       </main>
 
-      <footer className="border-t border-line bg-surface py-8 text-center text-sm text-ink-soft">
-        <p className="font-display font-semibold text-ink">
+      <footer className="border-t-2 border-toast/50 bg-surface pt-8 pb-8 text-center text-sm text-ink-soft">
+        <img
+          src="/osito-cositas.svg"
+          alt=""
+          width={88}
+          height={82}
+          className="mx-auto mb-3 h-14 w-auto"
+        />
+        <p className="font-display font-bold text-ink">
           {import.meta.env.VITE_STORE_NAME}
         </p>
         <p className="mt-1">Pedidos por WhatsApp</p>
